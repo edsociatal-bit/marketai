@@ -1,53 +1,1390 @@
- <!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MarketAI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MarketAI — AI Marketing Studio</title>
+
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f8f6;color:#173329}
-.app{display:flex;min-height:100vh}.side{width:230px;background:#285943;color:white;padding:25px 15px}.logo{font-size:25px;font-weight:bold;margin-bottom:30px}.logo span{color:#b9dcb3}
-.nav button{display:block;width:100%;padding:13px;margin:6px 0;border:0;border-radius:10px;background:transparent;color:white;text-align:left;font-size:15px}.nav button:hover,.nav .active{background:#6fa66a}
-.main{flex:1;padding:35px;max-width:1100px;margin:auto}.top{display:flex;justify-content:space-between;align-items:center}.badge{background:#e4efe6;color:#285943;padding:8px 12px;border-radius:20px;font-size:12px}
-.hero{margin:25px 0}.hero h1{font-size:38px;margin:0 0 8px}.hero p{color:#687870}
-.card{background:white;border:1px solid #dfe8e2;border-radius:18px;padding:22px;margin-top:20px;box-shadow:0 5px 20px #1733290b}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.field{margin:12px 0}.field label{display:block;font-weight:bold;margin-bottom:7px}input,textarea,select{width:100%;padding:13px;border:1px solid #ccd9d1;border-radius:10px;background:#fff}textarea{min-height:130px;resize:vertical}
-button.primary{background:#285943;color:white;border:0;border-radius:10px;padding:13px 20px;font-weight:bold;cursor:pointer}.result{white-space:pre-wrap;background:#f4f7f5;padding:18px;border-radius:12px;min-height:130px;margin-top:15px}
-.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.tool{padding:20px;border:1px solid #dce7df;border-radius:15px;background:white;cursor:pointer}.tool b{display:block;margin-bottom:7px}.hidden{display:none}
-@media(max-width:700px){.side{width:70px;padding:18px 8px}.logo{font-size:0}.logo:first-letter{font-size:24px}.nav button{font-size:0;text-align:center}.nav button:first-letter{font-size:20px}.main{padding:20px 14px}.hero h1{font-size:29px}.grid,.tools{grid-template-columns:1fr}}
+:root{
+  --green:#285943;
+  --green2:#6FA66A;
+  --cream:#F6F3EA;
+  --purple:#A995C9;
+  --dark:#173329;
+  --muted:#687770;
+  --white:#ffffff;
+  --bg:#f5f8f6;
+  --line:#dce7df;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:var(--bg);
+  color:var(--dark);
+}
+
+.app{
+  display:flex;
+  min-height:100vh;
+}
+
+.sidebar{
+  width:240px;
+  background:var(--green);
+  color:white;
+  padding:20px 14px;
+  position:sticky;
+  top:0;
+  height:100vh;
+}
+
+.logo{
+  font-size:26px;
+  font-weight:bold;
+  padding:10px;
+  margin-bottom:20px;
+}
+
+.logo span{
+  color:#bfe2ba;
+}
+
+.nav button{
+  width:100%;
+  border:0;
+  background:transparent;
+  color:white;
+  text-align:left;
+  padding:14px;
+  margin:4px 0;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.nav button:hover,
+.nav button.active{
+  background:rgba(255,255,255,.16);
+}
+
+.main{
+  flex:1;
+  max-width:1200px;
+  margin:auto;
+  padding:35px;
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.badge{
+  background:#e4f1e6;
+  color:var(--green);
+  padding:9px 14px;
+  border-radius:30px;
+  font-weight:bold;
+}
+
+h1{
+  font-size:40px;
+  margin:8px 0;
+}
+
+h2{
+  font-size:27px;
+  margin-bottom:5px;
+}
+
+p{
+  color:var(--muted);
+  line-height:1.6;
+}
+
+.hero{
+  margin:30px 0;
+}
+
+.tools{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.tool{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:22px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.tool:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
+
+.icon{
+  font-size:30px;
+  margin-bottom:12px;
+}
+
+.tool h3{
+  margin:0 0 7px;
+}
+
+.tool p{
+  margin:0;
+}
+
+.panel{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:24px;
+  margin-top:22px;
+}
+
+.formgrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.field{
+  margin-bottom:10px;
+}
+
+.field label{
+  display:block;
+  font-weight:bold;
+  margin-bottom:7px;
+}
+
+input,
+textarea,
+select{
+  width:100%;
+  border:1px solid #ccd9d1;
+  border-radius:10px;
+  padding:12px;
+  font:inherit;
+  color:var(--dark);
+  background:white;
+}
+
+textarea{
+  min-height:120px;
+  resize:vertical;
+}
+
+.full{
+  grid-column:1/-1;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  margin-top:15px;
+  flex-wrap:wrap;
+}
+
+.primary{
+  background:var(--green);
+  color:white;
+  border:0;
+  border-radius:10px;
+  padding:13px 20px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.secondary{
+  background:#eaf3ec;
+  color:var(--green);
+  border:0;
+  border-radius:10px;
+  padding:13px 20px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.output{
+  background:#10231c;
+  color:#eef8f0;
+  padding:20px;
+  border-radius:12px;
+  margin-top:20px;
+  white-space:pre-wrap;
+  line-height:1.6;
+  min-height:180px;
+}
+
+.hidden{
+  display:none;
+}
+
+.kpis{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin-top:20px;
+}
+
+.kpi{
+  background:white;
+  border:1px solid var(--line);
+  padding:18px;
+  border-radius:15px;
+}
+
+.kpi strong{
+  font-size:25px;
+  display:block;
+}
+
+.small{
+  color:var(--muted);
+  font-size:13px;
+}
+
+footer{
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+  padding:30px;
+}
+
+@media(max-width:800px){
+
+  .app{
+    display:block;
+  }
+
+  .sidebar{
+    width:100%;
+    height:auto;
+    position:relative;
+  }
+
+  .nav{
+    display:flex;
+    overflow-x:auto;
+    gap:5px;
+  }
+
+  .nav button{
+    min-width:max-content;
+  }
+
+  .main{
+    padding:20px;
+  }
+
+  .tools,
+  .formgrid,
+  .kpis{
+    grid-template-columns:1fr;
+  }
+
+  h1{
+    font-size:31px;
+  }
+
+  .full{
+    grid-column:auto;
+  }
+}
 </style>
 </head>
-<body>
-<div class="app">
-<aside class="side">
-<div class="logo">Market<span>AI</span></div>
-<div class="nav">
-<button class="active" onclick="show('studio')">🏠 Studio</button>
-<button onclick="show('ads')">📢 Facebook Ads</button>
-<button onclick="show('social')">✍️ Social Caption</button>
-<button onclick="show('carousel')">🎨 Carousel</button>
-<button onclick="show('video')">🎬 Video Ad</button>
-<button onclick="show('calendar')">📅 Content Calendar</button>
-</div>
-</aside>
-<main class="main">
-<div class="top"><b>AI Marketing Studio</b><span class="badge">VERSION 2</span></div>
 
-<section id="studio">
-<div class="hero"><h1>Create marketing content faster.</h1><p>Turn one product idea into ads, captions, carousels and video scripts.</p></div>
-<div class="tools">
-<div class="tool" onclick="show('ads')"><b>📢 Facebook Ads</b><small>Generate an ad concept.</small></div>
-<div class="tool" onclick="show('social')"><b>✍️ Captions</b><small>Create engaging posts.</small></div>
-<div class="tool" onclick="show('video')"><b>🎬 Video Ads</b><small>Build a short video script.</small></div>
+<body>
+
+<div class="app">
+
+<aside class="sidebar">
+
+<div class="logo">
+Market<span>AI</span>
 </div>
+
+<div class="nav">
+
+<button class="active" onclick="showPage('home',this)">
+🏠 Studio
+</button>
+
+<button onclick="showPage('ads',this)">
+📣 Facebook Ads
+</button>
+
+<button onclick="showPage('caption',this)">
+✍️ Captions
+</button>
+
+<button onclick="showPage('carousel',this)">
+🎨 Carousel
+</button>
+
+<button onclick="showPage('video',this)">
+🎬 Video Ads
+</button>
+
+<button onclick="showPage('calendar',this)">
+📅 Calendar
+</button>
+
+</div>
+
+</aside>
+
+
+<main class="main">
+
+<!-- HOME -->
+
+<section id="home">
+
+<div class="top">
+
+<div>
+<div class="small">AI MARKETING STUDIO</div>
+
+<h1>
+Create marketing content faster.
+</h1>
+
+<p>
+Turn one product idea into ads, captions,
+carousels, video scripts and content plans.
+</p>
+
+</div>
+
+<div class="badge">
+VERSION 3
+</div>
+
+</div>
+
+
+<div class="tools">
+
+<div class="tool" onclick="showPage('ads')">
+
+<div class="icon">📣</div>
+
+<h3>Facebook Ads</h3>
+
+<p>
+Generate a complete Facebook advertising concept.
+</p>
+
+</div>
+
+
+<div class="tool" onclick="showPage('caption')">
+
+<div class="icon">✍️</div>
+
+<h3>Captions</h3>
+
+<p>
+Create engaging Facebook and Instagram captions.
+</p>
+
+</div>
+
+
+<div class="tool" onclick="showPage('carousel')">
+
+<div class="icon">🎨</div>
+
+<h3>Carousel</h3>
+
+<p>
+Create slide-by-slide carousel content.
+</p>
+
+</div>
+
+
+<div class="tool" onclick="showPage('video')">
+
+<div class="icon">🎬</div>
+
+<h3>Video Ads</h3>
+
+<p>
+Create short-form Reel and video scripts.
+</p>
+
+</div>
+
+
+<div class="tool" onclick="showPage('calendar')">
+
+<div class="icon">📅</div>
+
+<h3>Content Calendar</h3>
+
+<p>
+Create a 30-day Facebook content plan.
+</p>
+
+</div>
+
+
+<div class="tool" onclick="demo()">
+
+<div class="icon">🌿</div>
+
+<h3>Doctri-Cee Demo</h3>
+
+<p>
+Load your wellness product information automatically.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="kpis">
+
+<div class="kpi">
+<strong>5</strong>
+<span class="small">Marketing tools</span>
+</div>
+
+<div class="kpi">
+<strong>1-click</strong>
+<span class="small">Copy results</span>
+</div>
+
+<div class="kpi">
+<strong>Mobile</strong>
+<span class="small">Friendly design</span>
+</div>
+
+</div>
+
 </section>
 
+
+<!-- ADS -->
+
 <section id="ads" class="hidden">
-<div class="hero"><h1>Facebook Ad Generator</h1><p>Create a ready-to-edit advertising concept.</p></div>
-<div class="card">
-<div class="grid">
-<div class="field"><label>Product</label><input id="ap" placeholder="e.g. Doctri-Cee"></div>
-<div class="field"><label>Audience</label><input id="aa" placeholder="e.g. Filipino adults 25+"></div>
+
+<h2>📣 Facebook Ad Generator</h2>
+
+<p>
+Create a ready-to-edit Facebook advertising concept.
+</p>
+
+<div class="panel">
+
+<div class="formgrid">
+
+<div class="field">
+
+<label>Product</label>
+
+<input id="adProduct"
+placeholder="Example: Doctri-Cee">
+
 </div>
-<div class="field"><label>Main benefit / offer</label><textarea id="ab" placeholder="Describe your product and offer..."></textarea></div>
-<button class="primary" onclick="
+
+
+<div class="field">
+
+<label>Target Audience</label>
+
+<input id="adAudience"
+placeholder="Example: Filipino adults 25+">
+
+</div>
+
+
+<div class="field full">
+
+<label>Main Benefit / Offer</label>
+
+<textarea id="adBenefit"
+placeholder="Describe your product, offer or key message."></textarea>
+
+</div>
+
+
+<div class="field">
+
+<label>Tone</label>
+
+<select id="adTone">
+
+<option>Trustworthy & Friendly</option>
+<option>Premium & Modern</option>
+<option>Warm & Family Friendly</option>
+<option>Energetic & Youthful</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>Call To Action</label>
+
+<input id="adCTA"
+value="Message us to learn more">
+
+</div>
+
+</div>
+
+
+<div class="actions">
+
+<button class="primary" onclick="generateAd()">
+Generate Ad
+</button>
+
+<button class="secondary" onclick="copyResult()">
+Copy
+</button>
+
+</div>
+
+
+<div id="adResult" class="output">
+Your advertisement will appear here.
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CAPTION -->
+
+<section id="caption" class="hidden">
+
+<h2>✍️ Social Media Caption Generator</h2>
+
+<p>
+Create a caption with hook, value, CTA and hashtags.
+</p>
+
+<div class="panel">
+
+<div class="field">
+
+<label>Product</label>
+
+<input id="capProduct"
+placeholder="Example: 2M Blend">
+
+</div>
+
+
+<div class="field">
+
+<label>Post Topic</label>
+
+<textarea id="capTopic"
+placeholder="Example: morning wellness routine"></textarea>
+
+</div>
+
+
+<div class="actions">
+
+<button class="primary" onclick="generateCaption()">
+Generate Caption
+</button>
+
+<button class="secondary" onclick="copyResult()">
+Copy
+</button>
+
+</div>
+
+
+<div id="captionResult" class="output">
+Your caption will appear here.
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CAROUSEL -->
+
+<section id="carousel" class="hidden">
+
+<h2>🎨 Carousel Generator</h2>
+
+<p>
+Create a 7-slide Facebook or Instagram carousel.
+</p>
+
+<div class="panel">
+
+<div class="formgrid">
+
+<div class="field">
+
+<label>Product / Topic</label>
+
+<input id="carProduct"
+placeholder="Example: Doctri-Cee">
+
+</div>
+
+
+<div class="field">
+
+<label>Audience</label>
+
+<input id="carAudience"
+placeholder="Example: Filipino adults">
+
+</div>
+
+
+<div class="field full">
+
+<label>Main Message</label>
+
+<textarea id="carMessage"
+placeholder="What should your audience understand?"></textarea>
+
+</div>
+
+</div>
+
+
+<div class="actions">
+
+<button class="primary" onclick="generateCarousel()">
+Generate Carousel
+</button>
+
+<button class="secondary" onclick="copyResult()">
+Copy
+</button>
+
+</div>
+
+
+<div id="carouselResult" class="output">
+Your carousel will appear here.
+</div>
+
+</div>
+
+</section>
+
+
+<!-- VIDEO -->
+
+<section id="video" class="hidden">
+
+<h2>🎬 Video Ad Generator</h2>
+
+<p>
+Create a 30-second Facebook Reel or short-form video script.
+</p>
+
+<div class="panel">
+
+<div class="formgrid">
+
+<div class="field">
+
+<label>Product</label>
+
+<input id="videoProduct"
+placeholder="Example: 2M Blend">
+
+</div>
+
+
+<div class="field">
+
+<label>Video Style</label>
+
+<select id="videoStyle">
+
+<option>UGC / Talking to Camera</option>
+<option>Product Commercial</option>
+<option>Problem → Solution</option>
+<option>Lifestyle Montage</option>
+
+</select>
+
+</div>
+
+
+<div class="field full">
+
+<label>Main Message</label>
+
+<textarea id="videoMessage"
+placeholder="What do you want to promote?"></textarea>
+
+</div>
+
+</div>
+
+
+<div class="actions">
+
+<button class="primary" onclick="generateVideo()">
+Generate Video Script
+</button>
+
+<button class="secondary" onclick="copyResult()">
+Copy
+</button>
+
+</div>
+
+
+<div id="videoResult" class="output">
+Your video script will appear here.
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CALENDAR -->
+
+<section id="calendar" class="hidden">
+
+<h2>📅 30-Day Content Calendar</h2>
+
+<p>
+Generate a simple Facebook content plan for your product.
+</p>
+
+<div class="panel">
+
+<div class="field">
+
+<label>Product / Brand</label>
+
+<input id="calendarProduct"
+placeholder="Example: Doctri-Cee">
+
+</div>
+
+
+<div class="actions">
+
+<button class="primary" onclick="generateCalendar()">
+Generate 30 Days
+</button>
+
+<button class="secondary" onclick="copyResult()">
+Copy
+</button>
+
+</div>
+
+
+<div id="calendarResult" class="output">
+Your content calendar will appear here.
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+
+<footer>
+MarketAI • Marketing planning assistant
+</footer>
+
+
+<script>
+
+let currentResult = "";
+
+
+/* NAVIGATION */
+
+function showPage(page,button){
+
+document.querySelectorAll("main section")
+.forEach(section=>{
+section.classList.add("hidden");
+});
+
+document.getElementById(page)
+.classList.remove("hidden");
+
+document.querySelectorAll(".nav button")
+.forEach(btn=>{
+btn.classList.remove("active");
+});
+
+if(button){
+button.classList.add("active");
+}
+
+window.scrollTo(0,0);
+
+}
+
+
+/* COPY */
+
+function copyResult(){
+
+if(!currentResult){
+alert("Generate something first.");
+return;
+}
+
+navigator.clipboard.writeText(currentResult);
+
+alert("Copied!");
+
+}
+
+
+/* FACEBOOK ADS */
+
+function generateAd(){
+
+let product =
+document.getElementById("adProduct").value ||
+"Your Product";
+
+let audience =
+document.getElementById("adAudience").value ||
+"Filipino consumers";
+
+let benefit =
+document.getElementById("adBenefit").value ||
+"a simple addition to your daily routine";
+
+let tone =
+document.getElementById("adTone").value;
+
+let cta =
+document.getElementById("adCTA").value ||
+"Message us to learn more";
+
+
+currentResult =
+
+`FACEBOOK AD CONCEPT
+
+PRODUCT:
+${product}
+
+TARGET:
+${audience}
+
+HOOK:
+Make wellness part of your everyday routine. 🌿
+
+PRIMARY TEXT:
+
+Looking for a simple way to support your everyday wellness routine?
+
+Meet ${product}.
+
+${benefit}
+
+Created for ${audience}, with a ${tone.toLowerCase()} communication style.
+
+Keep your routine simple.
+Stay informed.
+Choose products that fit your lifestyle.
+
+HEADLINE:
+
+MAKE WELLNESS PART OF YOUR DAY
+
+CALL TO ACTION:
+
+${cta}
+
+CREATIVE DIRECTION:
+
+• Premium product photography
+• Forest green #285943
+• Fresh green #6FA66A
+• Warm cream #F6F3EA
+• White background
+• Natural morning sunlight
+• Green botanical elements
+• Clean Filipino lifestyle setting
+• Product as the main focal point
+
+IMPORTANT:
+
+Use only verified product information and approved advertising claims.
+Do not claim that a supplement treats, cures or prevents a disease.`;
+
+
+document.getElementById("adResult").textContent =
+currentResult;
+
+}
+
+
+/* CAPTION */
+
+function generateCaption(){
+
+let product =
+document.getElementById("capProduct").value ||
+"Your Product";
+
+let topic =
+document.getElementById("capTopic").value ||
+"building a simple daily wellness routine";
+
+
+currentResult =
+
+`${product} 🌿
+
+${topic}
+
+Your wellness routine doesn't have to be complicated.
+
+Small, consistent habits can make your everyday routine more intentional.
+
+✨ Keep things simple.
+✨ Learn about what you're taking.
+✨ Follow the recommended use.
+✨ Make informed choices.
+
+Interested in ${product}?
+
+📩 Send us a message to learn more.
+
+#EverydayWellness
+#WellnessRoutine
+#HealthyHabits
+#Philippines
+#${product.replace(/[^a-zA-Z0-9]/g,"")}`;
+
+
+document.getElementById("captionResult").textContent =
+currentResult;
+
+}
+
+
+/* CAROUSEL */
+
+function generateCarousel(){
+
+let product =
+document.getElementById("carProduct").value ||
+"Your Product";
+
+let audience =
+document.getElementById("carAudience").value ||
+"Filipino adults";
+
+let message =
+document.getElementById("carMessage").value ||
+"understanding the product";
+
+
+currentResult =
+
+`${product} — 7 SLIDE CAROUSEL
+
+SLIDE 1 — HOOK
+
+Want to understand ${product} better?
+
+Visual:
+Premium product hero image.
+
+
+SLIDE 2 — THE QUESTION
+
+What should consumers know before choosing a wellness product?
+
+Keep the message simple and educational.
+
+
+SLIDE 3 — THE IDEA
+
+${message}
+
+Explain this using clear, verified information.
+
+
+SLIDE 4 — WHAT IS ${product}?
+
+Introduce the product.
+
+Show:
+• Product
+• Ingredients
+• Official label information
+• Intended use
+
+
+SLIDE 5 — HOW TO USE
+
+Show the official serving or directions.
+
+Always follow the product label.
+
+
+SLIDE 6 — WHO IS IT FOR?
+
+Designed for:
+${audience}
+
+Avoid unsupported medical or health claims.
+
+
+SLIDE 7 — CTA
+
+Have questions about ${product}?
+
+MESSAGE US FOR PRODUCT DETAILS.
+
+
+DESIGN STYLE:
+
+Forest Green #285943
+Fresh Green #6FA66A
+Warm Cream #F6F3EA
+White #FFFFFF
+Subtle Lavender #A995C9
+
+Premium.
+Clean.
+Natural.
+Modern.
+Trustworthy.`;
+
+
+document.getElementById("carouselResult").textContent =
+currentResult;
+
+}
+
+
+/* VIDEO */
+
+function generateVideo(){
+
+let product =
+document.getElementById("videoProduct").value ||
+"Your Product";
+
+let style =
+document.getElementById("videoStyle").value;
+
+let message =
+document.getElementById("videoMessage").value ||
+"introducing the product as part of an everyday wellness routine";
+
+
+currentResult =
+
+`30-SECOND VIDEO AD
+
+PRODUCT:
+${product}
+
+STYLE:
+${style}
+
+
+0–3 SECONDS — HOOK
+
+Visual:
+Close-up product shot.
+
+Text:
+"Make wellness part of your day."
+
+
+3–8 SECONDS — PROBLEM
+
+Visual:
+Person starting their morning.
+
+Voiceover:
+
+"Looking for a simple addition to your daily routine?"
+
+
+8–16 SECONDS — PRODUCT
+
+Visual:
+Show ${product}.
+
+Voiceover:
+
+"Meet ${product}.
+
+${message}"
+
+
+16–23 SECONDS — LIFESTYLE
+
+Visual:
+Morning routine.
+Breakfast.
+Product close-up.
+
+Text:
+
+"Simple. Clear. Everyday."
+
+
+23–27 SECONDS — TRUST
+
+Visual:
+Packaging and label.
+
+Text:
+
+"Check the label.
+Follow recommended use."
+
+
+27–30 SECONDS — CTA
+
+Visual:
+Premium product hero shot.
+
+Text:
+
+"Message us to learn more."
+
+
+EDITING:
+
+9:16 vertical
+Fast clean cuts
+Natural daylight
+Subtitles
+Premium wellness music
+Clean green/white branding
+
+
+IMPORTANT:
+
+Use only approved product information and claims.`;
+
+
+document.getElementById("videoResult").textContent =
+currentResult;
+
+}
+
+
+/* CALENDAR */
+
+function generateCalendar(){
+
+let product =
+document.getElementById("calendarProduct").value ||
+"Your Brand";
+
+
+let topics = [
+
+"Introduce your brand",
+
+"Product introduction",
+
+"Educational tip",
+
+"FAQ",
+
+"Behind the scenes",
+
+"Lifestyle post",
+
+"Product detail",
+
+"Myth vs fact",
+
+"Customer question",
+
+"Poll / engagement",
+
+"Ingredient spotlight",
+
+"Morning routine",
+
+"Product photo",
+
+"Educational carousel",
+
+"Customer FAQ",
+
+"Founder story",
+
+"Wellness reminder",
+
+"Product comparison",
+
+"How to use",
+
+"Community question",
+
+"Reel idea",
+
+"Product benefits",
+
+"Common mistake",
+
+"Educational post",
+
+"Customer question",
+
+"Lifestyle Reel",
+
+"Product reminder",
+
+"Brand story",
+
+"FAQ",
+
+"Call to action"
+
+];
+
+
+currentResult =
+`30-DAY CONTENT CALENDAR — ${product}
+
+`;
+
+
+topics.forEach((topic,index)=>{
+
+currentResult +=
+
+`DAY ${index+1}
+${topic}
+
+Suggested format:
+${index % 3 === 0 ? "Reel / Short Video" :
+index % 3 === 1 ? "Facebook Image" :
+"Carousel"}
+
+CTA:
+${index % 2 === 0 ?
+"Comment your thoughts." :
+"Message us to learn more."}
+
+`;
+
+});
+
+
+currentResult +=
+
+`CONTENT MIX:
+
+• Educational
+• Product
+• Lifestyle
+• Engagement
+• FAQ
+• Reels
+• Brand story
+
+GOAL:
+
+Build trust first, then gradually convert attention into product inquiries.`;
+
+
+document.getElementById("calendarResult").textContent =
+currentResult;
+
+}
+
+
+/* DOCTRI-CEE DEMO */
+
+function demo(){
+
+document.getElementById("adProduct").value =
+"Doctri-Cee";
+
+document.getElementById("adAudience").value =
+"Filipino adults 25+";
+
+document.getElementById("adBenefit").value =
+"an everyday vitamin C product that can be included in a daily wellness routine";
+
+document.getElementById("adCTA").value =
+"Message us for product details";
+
+
+document.getElementById("capProduct").value =
+"Doctri-Cee";
+
+document.getElementById("capTopic").value =
+"building a simple and consistent daily wellness routine";
+
+
+document.getElementById("carProduct").value =
+"Doctri-Cee";
+
+document.getElementById("carAudience").value =
+"Filipino adults";
+
+document.getElementById("carMessage").value =
+"understanding the product, its ingredients and its official recommended use";
+
+
+document.getElementById("videoProduct").value =
+"Doctri-Cee";
+
+document.getElementById("videoMessage").value =
+"introducing Doctri-Cee as part of an everyday wellness routine";
+
+
+document.getElementById("calendarProduct").value =
+"Doctri-Cee";
+
+
+showPage("ads");
+
+generateAd();
+
+}
+
+</script>
+
+</body>
+</html>
